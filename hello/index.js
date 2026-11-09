@@ -1,4 +1,5 @@
 // 示例插件：验证 GitHub 导入的完整流程
+// 注意：沙箱不支持 async/await，统一用 Promise 链
 module.exports = function ({ React, RN, api }) {
   const { View, Text, TouchableOpacity, StyleSheet } = RN;
   const styles = StyleSheet.create({
@@ -13,24 +14,25 @@ module.exports = function ({ React, RN, api }) {
     const [count, setCount] = React.useState(0);
     const [saved, setSaved] = React.useState('');
 
-    React.useEffect(() => {
+    React.useEffect(function () {
       api.storage.get('count').then(function (v) {
         if (v) setCount(parseInt(v, 10) || 0);
       }).catch(function () {});
       api.files.readText('state.txt').then(setSaved).catch(function () {});
     }, []);
 
-    const increase = async function () {
+    const increase = function () {
       const next = count + 1;
       setCount(next);
-      await api.storage.set('count', String(next));
-      await api.files.writeText('state.txt', 'count=' + next);
-      setSaved('count=' + next);
-      api.vibrate.short().catch(function () {});
+      return api.storage.set('count', String(next))
+        .then(function () { return api.files.writeText('state.txt', 'count=' + next); })
+        .then(function () { setSaved('count=' + next); })
+        .then(function () { return api.vibrate.short(); })
+        .catch(function (e) { setSaved('写入失败：' + e.message); });
     };
 
-    const copy = async function () {
-      await api.clipboard.set('来自 Hello 示例插件：' + count);
+    const copy = function () {
+      return api.clipboard.set('来自 Hello 示例插件：' + count).catch(function () {});
     };
 
     return React.createElement(View, { style: styles.container },
