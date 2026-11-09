@@ -1,0 +1,10 @@
+{
+  "id": "com.sunset69.asyncbad",
+  "name": "async 反例",
+  "version": "1.0.0",
+  "entry": "index.js",
+  "permissions": ["storage"],
+  "description": "使用 async/await，应被导入校验拦截",
+  "author": "sunset69",
+  "specVersion": 1
+}
