@@ -1,0 +1,11 @@
+{
+  "id": "com.sunset69.hello",
+  "name": "Hello 样例",
+  "version": "1.0.0",
+  "entry": "index.js",
+  "permissions": ["storage", "clipboard", "vibrate"],
+  "description": "用于验证 GitHub 导入流程的示例插件",
+  "author": "sunset69",
+  "minAppVersion": "1.0.0",
+  "specVersion": 1
+}
