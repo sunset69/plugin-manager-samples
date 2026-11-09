@@ -1,0 +1,9 @@
+{
+  "id": "Broken.Demo",
+  "name": "",
+  "version": "1.0",
+  "entry": "../escape.js",
+  "permissions": ["storage", "bluetooth", "nfc"],
+  "minAppVersion": "9.9.9",
+  "specVersion": 2
+}
